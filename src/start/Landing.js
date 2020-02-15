@@ -14,7 +14,7 @@ const styles = {
   `,
   button: css`
     position: absolute;
-    top: 54%;
+    top: 53.9%;
     left: 47.5%;
   `,
 };
