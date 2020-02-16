@@ -6,22 +6,18 @@ from operator import itemgetter
 import json
 import requests
 
-client = googlemaps.Client(key="AIzaSyDgvddGsMZEBIGzVtJy_gLm9zse7-INQRA")
+client = googlemaps.Client(key="AIzaSyDlJuLdAreKv4vCNH0vwGxarXY3e4F_e-I")
 
 
 #Get places near to location, then return one with top review
 #Expects string in the form "lat,long"
 def getPlace(event, location, radius):
-    if(radius >= 100000):
-        return None
     cat = event["category"]
-    places = client.places(type, type = cat, location=location, radius = radius)["results"]
+    places = client.places(cat.replace('_',' '), type = cat, location=location, radius = radius)["results"]
     places = sorted(places, key = itemgetter("rating"), reverse=True)
-    print("Places: " + str(places) + " at radius: " + str(radius))
     if(len(places) >= 1):
         return places[0]
     else:
-        print("nothing found...")
         getPlace(event, location, radius + 2000)
 
 #Returns tuple containing waypoints data and their respective place IDs and durations
@@ -40,12 +36,11 @@ def generateWaypoints(data):
     for event in data["events"]:
         address = getPlace(event, location, 10000)
         if(address == None):
-            print("No address!!")
             continue
         location = str(address["geometry"]["location"]["lat"]) + \
             "," + str(address["geometry"]["location"]["lng"])
-        
-        duration = event["duration"]
+        print(event)
+        duration = event["timeSpent"]
 
         name.append(event["name"])
         category.append(event["category"])
@@ -82,13 +77,9 @@ CORS(app)
 def parse_data():
     data = request.get_json()
     data = json.dumps(data)
-    print(data)
     wp = generateWaypoints(data)
-    print(wp)
     direc = generateDirections(wp[5], wp)
-    print(direc)
     timetable = buildTT(direc)
-    print(timetable)
     return str(timetable)
 
 

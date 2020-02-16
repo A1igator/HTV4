@@ -132,6 +132,20 @@ export default function Itinerary(props) {
           events: eventsNoKeys,
         }
         console.log(itinerary);
+        fetch('http://35.184.180.94:80/postTT', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(itinerary)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
         props.timeTableFetch();
       }}>Submit</Button>
     </div>
