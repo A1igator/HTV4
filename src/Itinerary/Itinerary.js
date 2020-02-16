@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { css, cx } from 'emotion';
 import { Button, Modal, Dropdown, Input, Form } from 'semantic-ui-react';
 import useGeolocation from 'react-hook-geolocation'
+import { Link } from "react-router-dom";
 import listOfCategories from './listOfCategories.txt';
 
 const styles = {
@@ -121,7 +122,7 @@ export default function Itinerary() {
             openModal();
           }} circular icon='plus'/>
       </div>
-      <Button inverted className={styles.event} onClick={() => {
+      <Button inverted className={styles.event} as={Link} to="/map" onClick={() => {
         const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent}));
         const itinerary = {
           user: {

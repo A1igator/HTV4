@@ -1,6 +1,9 @@
 import React from 'react';
 import { css, cx } from 'emotion';
 import { Button } from 'semantic-ui-react';
+import {
+  Link
+} from "react-router-dom";
 import backImg from './undraw_navigator_a479.svg';
 
 const styles = {
@@ -22,7 +25,7 @@ const styles = {
 export default function Landing() {
   return (
     <div className={styles.landing}>
-      <Button className={styles.button}>Start</Button>
+      <Button as={Link} to="/itinerary" className={styles.button}>Start</Button>
     </ div>
   )
 }
