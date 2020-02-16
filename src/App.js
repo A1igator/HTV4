@@ -13,6 +13,7 @@ import MapViewWalking from './map/MapViewWalking';
 
 function App() {
   const [timetable, setTimeTable] = useState([]);
+  const [itinerary, setItinerary] = useState([]);
 
   return (
     <div className="App">
@@ -20,13 +21,13 @@ function App() {
         <Router>
           <Switch>
             <Route path="/map">
-              <MapView timetable={timetable}/>
+              <MapView itinerary={itinerary} timetable={timetable}/>
             </Route>
             <Route path="/mapWalking">
-              <MapViewWalking timetable={timetable}/>
+              <MapViewWalking itinerary={itinerary} timetable={timetable}/>
             </Route>
             <Route path="/itinerary">
-              <Itinerary timeTableFetch={table => {console.log(table); setTimeTable(table)}} />
+              <Itinerary timeTableFetch={(table, itinerary) => {console.log(table); setTimeTable(table); setItinerary(itinerary)}} />
             </Route>
             <Route path="/">
               <Landing />

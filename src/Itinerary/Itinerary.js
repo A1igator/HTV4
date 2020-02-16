@@ -66,20 +66,20 @@ export default function Itinerary(props) {
                     onChange={(_, {value}) => {setCategory(value)}}
                   />
                 </Form.Field>
-                <Form.Field required>
+                {/* <Form.Field required>
                   <Input 
                     onChange={(_, {value}) => {setTimeSpent(value)}} 
                     fluid
                     type='number'
                     defaultValue={event.timeSpent}
-                    placeholder='time spent there' 
+                    placeholder='duration (minutes)' 
                   />
-                </Form.Field>
+                </Form.Field> */}
                 <Form.Field>
                   <Button
                     color="green"
                     onClick={() => {
-                    if (timeSpent !== null && timeSpent.match(/^-{0,1}\d+$/) && !events.some(e => e.name === name && e.id !== event.id)) {
+                    if (!events.some(e => e.name === name && e.id !== event.id)) {
                       console.log('test');
                       setEvents(events.map(e => e.id === event.id ? {...event, name, category, timeSpent, open: false} : e)); 
                       setName('');
@@ -87,9 +87,9 @@ export default function Itinerary(props) {
                       setTimeSpent(null);
                       event.open = false;
                     } 
-                    if (event.timeSpent !== null) {
-                      event.open = false;
-                    }
+                    // if (event.timeSpent !== null) {
+                    //   event.open = false;
+                    // }
                   }}>Save</Button>
                   <Button
                     color="red"
@@ -142,7 +142,7 @@ export default function Itinerary(props) {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
-            props.timeTableFetch(data);
+            props.timeTableFetch(data, itinerary);
           })
           .catch(error => {
             console.error('Error:', error);
