@@ -43,8 +43,8 @@ def generateWaypoints(data):
         "," + str(data["user"]["location"]["lng"])
     for event in data["events"]:
         place = ''
-        if("address" in event):
-            place = getPlaceFromAddress(address)
+        if(event["address"]):
+            place = getPlaceFromAddress(event["address"])
         else:
             place = getPlace(event, location, 10000)
         if(place == None):
