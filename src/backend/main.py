@@ -13,7 +13,10 @@ client = googlemaps.Client(key="AIzaSyDlJuLdAreKv4vCNH0vwGxarXY3e4F_e-I")
 #Expects string in the form "lat,long"  
 def getPlace(event, location, radius):
     cat = event["category"]
-    places = client.places(cat.replace('_',' '), type = cat, location=location, radius = radius)["results"]
+    search = event["keywords"]
+    if(search == ''):
+        search = cat.replace('_', '')
+    places = client.places(search, type = cat, location=location, radius = radius)["results"]
     places = sorted(places, key = itemgetter("rating"), reverse=True)
     if(len(places) >= 1):
         return places[0]
