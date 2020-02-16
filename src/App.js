@@ -9,9 +9,11 @@ import Itinerary from './Itinerary/Itinerary';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import MapView from './map/MapView.js';
+import MapViewWalking from './map/MapViewWalking';
 
 function App() {
   const [timetable, setTimeTable] = useState([]);
+  const [itinerary, setItinerary] = useState([]);
 
   return (
     <div className="App">
@@ -19,13 +21,19 @@ function App() {
         <Router>
           <Switch>
             <Route path="/map">
-              <MapView />
+              <MapView itinerary={itinerary} timetable={timetable}/>
+            </Route>
+            <Route path="/mapWalking">
+              <MapViewWalking itinerary={itinerary} timetable={timetable}/>
+            </Route>
+            <Route path="/mapBicycling">
+              <MapViewWalking itinerary={itinerary} timetable={timetable}/>
             </Route>
             <Route path="/itinerary">
-              <Itinerary timeTableFetch={table => {setTimeTable(table)}} />
+              <Itinerary timeTableFetch={(table, itinerary) => {console.log(table); setTimeTable(table); setItinerary(itinerary)}} />
             </Route>
             <Route path="/">
-              <Landing timetable={timetable}/>
+              <Landing />
             </Route>
           </Switch>
         </Router>

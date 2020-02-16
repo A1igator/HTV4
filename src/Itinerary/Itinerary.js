@@ -24,7 +24,7 @@ export default function Itinerary(props) {
   const [events, setEvents] = useState([]);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
-  const [timeSpent, setTimeSpent] = useState(null);
+  const [address, setAddress] = useState(null);
   const [categories, setCategories] = useState([{text: ""}]);
   fetch(listOfCategories)
   .then(response => response.text())
@@ -68,28 +68,27 @@ export default function Itinerary(props) {
                 </Form.Field>
                 <Form.Field required>
                   <Input 
-                    onChange={(_, {value}) => {setTimeSpent(value)}} 
+                    onChange={(_, {value}) => {setAddress(value)}} 
                     fluid
-                    type='number'
-                    defaultValue={event.timeSpent}
-                    placeholder='time spent there' 
+                    defaultValue={event.address}
+                    placeholder='Address' 
                   />
                 </Form.Field>
                 <Form.Field>
                   <Button
                     color="green"
                     onClick={() => {
-                    if (timeSpent !== null && timeSpent.match(/^-{0,1}\d+$/) && !events.some(e => e.name === name && e.id !== event.id)) {
+                    if (!events.some(e => e.name === name && e.id !== event.id)) {
                       console.log('test');
-                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, timeSpent, open: false} : e)); 
+                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, address, open: false} : e)); 
                       setName('');
                       setCategory('');
-                      setTimeSpent(null);
+                      setAddress(null);
                       event.open = false;
                     } 
-                    if (event.timeSpent !== null) {
-                      event.open = false;
-                    }
+                    // if (event.timeSpent !== null) {
+                    //   event.open = false;
+                    // }
                   }}>Save</Button>
                   <Button
                     color="red"
@@ -97,7 +96,7 @@ export default function Itinerary(props) {
                         setEvents(events.filter(e => e.id !== event.id))
                         setName('');
                         setCategory('');
-                        setTimeSpent(null);
+                        setAddress(null);
                       }
                     }
                   >Delete</Button>
@@ -120,7 +119,7 @@ export default function Itinerary(props) {
           setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color, open: true}]);           
         }} circular icon='plus'/>
       </div>
-      <Button size="massive" inverted className={styles.event} as={Link} to="/map" onClick={() => {
+      <Button disabled={events.length < 2 || events.length > 8} size="massive" inverted className={styles.event} as={Link} to="/map" onClick={() => {
         const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent}));
         const itinerary = {
           user: {
@@ -140,13 +139,13 @@ export default function Itinerary(props) {
           body: JSON.stringify(itinerary)
         })
           .then(response => response.json())
-          .then(itinerary => {
-            console.log('Success:', itinerary);
+          .then(data => {
+            console.log('Success:', data);
+            props.timeTableFetch(data, itinerary);
           })
           .catch(error => {
             console.error('Error:', error);
           });
-        props.timeTableFetch();
       }}>Submit</Button>
     </div>
   )

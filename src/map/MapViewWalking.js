@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { Icon, Label, Menu, Table } from 'semantic-ui-react';
+import { Icon, Button, Label, Menu, Table } from 'semantic-ui-react';
 import './MapView.css';
 import useGeolocation from 'react-hook-geolocation';
 import {withRouter} from 'react-router-dom';
-import { Button } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const {
   withGoogleMap,
@@ -14,7 +12,7 @@ const {
   Marker,
   InfoWindow,
 } = require("react-google-maps");
-let my_mode = window.google.maps.TravelMode.DRIVING;
+let my_mode = window.google.maps.TravelMode.WALKING;
   var test = [
     //['EjAxMDk1IE1pbGl0YXJ5IFRyYWlsLCBTY2FyYm9yb3VnaCwgT04gTTFDLCBDYW5hZGEiMRIvChQKEgkZZMv3cdrUiRGHVO7W2wI10hDHCCoUChIJD0-c13Da1IkRGWlnDJ0lOVg','Loading...','Loading...'],
     //['EjAxMDk1IE1pbGl0YXJ5IFRyYWlsLCBTY2FyYm9yb3VnaCwgT04gTTFDLCBDYW5hZGEiMRIvChQKEgkZZMv3cdrUiRGHVO7W2wI10hDHCCoUChIJD0-c13Da1IkRGWlnDJ0lOVg','Loading...','Loading...']
@@ -209,7 +207,7 @@ class MapView extends Component {
         <b>Mode of Travel:</b>
         <Dropdown
           onChange={(_, {value})=>{this.props.history.push(value)}}
-          placeholder='Driving'
+          placeholder='Walking'
           fluid
           selection
           options={modes}
