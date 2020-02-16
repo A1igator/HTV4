@@ -24,7 +24,7 @@ export default function Itinerary(props) {
   const [events, setEvents] = useState([]);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
-  const [timeSpent, setTimeSpent] = useState(null);
+  const [address, setAddress] = useState(null);
   const [categories, setCategories] = useState([{text: ""}]);
   fetch(listOfCategories)
   .then(response => response.text())
@@ -66,25 +66,24 @@ export default function Itinerary(props) {
                     onChange={(_, {value}) => {setCategory(value)}}
                   />
                 </Form.Field>
-                {/* <Form.Field required>
+                <Form.Field required>
                   <Input 
-                    onChange={(_, {value}) => {setTimeSpent(value)}} 
+                    onChange={(_, {value}) => {setAddress(value)}} 
                     fluid
-                    type='number'
-                    defaultValue={event.timeSpent}
-                    placeholder='duration (minutes)' 
+                    defaultValue={event.address}
+                    placeholder='Address' 
                   />
-                </Form.Field> */}
+                </Form.Field>
                 <Form.Field>
                   <Button
                     color="green"
                     onClick={() => {
                     if (!events.some(e => e.name === name && e.id !== event.id)) {
                       console.log('test');
-                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, timeSpent, open: false} : e)); 
+                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, address, open: false} : e)); 
                       setName('');
                       setCategory('');
-                      setTimeSpent(null);
+                      setAddress(null);
                       event.open = false;
                     } 
                     // if (event.timeSpent !== null) {
@@ -97,7 +96,7 @@ export default function Itinerary(props) {
                         setEvents(events.filter(e => e.id !== event.id))
                         setName('');
                         setCategory('');
-                        setTimeSpent(null);
+                        setAddress(null);
                       }
                     }
                   >Delete</Button>
