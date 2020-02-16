@@ -77,13 +77,9 @@ CORS(app)
 def parse_data():
     data = request.get_json()
     data = json.dumps(data)
-    print(data)
     wp = generateWaypoints(data)
-    print(wp)
     direc = generateDirections(wp[5], wp)
-    print(direc)
     timetable = buildTT(direc)
-    print(timetable)
     return str(timetable)
 
 
