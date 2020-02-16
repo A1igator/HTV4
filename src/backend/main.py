@@ -1,16 +1,16 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-import googlemaps
 from datetime import datetime
 from operator import itemgetter
 import json
 import requests
 
+import googlemaps
+
 client = googlemaps.Client(key="AIzaSyDlJuLdAreKv4vCNH0vwGxarXY3e4F_e-I")
-
-
+    
 #Get places near to location, then return one with top review
-#Expects string in the form "lat,long"
+#Expects string in the form "lat,long"  
 def getPlace(event, location, radius):
     cat = event["category"]
     places = client.places(cat.replace('_',' '), type = cat, location=location, radius = radius)["results"]
@@ -20,9 +20,17 @@ def getPlace(event, location, radius):
     else:
         getPlace(event, location, radius + 2000)
 
+#Takes formatted address and returns full detail of place. 
+def getPlaceFromAddress(address):
+    place = client.find_place(address, 'textquery', fields=["geometry", "name", "formatted_address"])
+    if(0 < len(place["candidates"]) <= 2):
+        place = place["candidates"][0]
+    else:
+        print("Address not found.")
+        return None
+    return place
+
 #Returns tuple containing waypoints data and their respective place IDs and durations
-
-
 def generateWaypoints(data):
     wp = []
     placeID = []
