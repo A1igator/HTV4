@@ -80,6 +80,8 @@ def parse_data():
     wp = generateWaypoints(data)
     direc = generateDirections(wp[5], wp)
     timetable = buildTT(direc)
-    return str(timetable)
+    response = json.dumps({"response": timetable})
+    print(response)
+    return response
 
 
