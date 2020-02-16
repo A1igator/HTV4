@@ -28,13 +28,7 @@ export default function Itinerary(props) {
   const [categories, setCategories] = useState([{text: ""}]);
   fetch(listOfCategories)
   .then(response => response.text())
-  .then(text => setCategories(text.split("\n").map(name => {return {value: name.replace(/_/g, " ").split(' ')
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-  .join(' '), key: name.replace(/_/g, " ").split(' ')
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-  .join(' '), text: name.replace(/_/g, " ").split(' ')
-  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-  .join(' ')}})));
+  .then(text => setCategories(text.split("\n").map(name => {return {value: name, key: name, text: name}})));
 
   const geolocation = useGeolocation();
 
