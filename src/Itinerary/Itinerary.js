@@ -72,7 +72,7 @@ export default function Itinerary(props) {
                     fluid
                     type='number'
                     defaultValue={event.timeSpent}
-                    placeholder='time spent there' 
+                    placeholder='duration (minutes)' 
                   />
                 </Form.Field>
                 <Form.Field>
@@ -146,7 +146,7 @@ export default function Itinerary(props) {
           .catch(error => {
             console.error('Error:', error);
           });
-        props.timeTableFetch();
+        // props.timeTableFetch();
       }}>Submit</Button>
     </div>
   )
