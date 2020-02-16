@@ -22,7 +22,7 @@ def getPlace(event, location, radius):
 
 #Takes formatted address and returns full detail of place. 
 def getPlaceFromAddress(address):
-    place = client.find_place(address, 'textquery', fields=["geometry", "name", "formatted_address"])
+    place = client.find_place(address, 'textquery', fields=["geometry", "name", "formatted_address", "place_id"])
     if(0 < len(place["candidates"]) <= 2):
         place = place["candidates"][0]
     else:
@@ -43,6 +43,7 @@ def generateWaypoints(data):
         "," + str(data["user"]["location"]["lng"])
     for event in data["events"]:
         place = ''
+        print(event)
         if(event["address"]):
             place = getPlaceFromAddress(event["address"])
         else:
