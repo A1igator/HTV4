@@ -20,11 +20,8 @@ const colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'vi
 let newColors = [...colors];
 let color;
 
-export default function Itinerary() {
+export default function Itinerary(props) {
   const [events, setEvents] = useState([]);
-  const [open, setOpen] = useState(false),
-    closeModal = () => setOpen(false),
-    openModal = () => setOpen(true);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [timeSpent, setTimeSpent] = useState(null);
@@ -45,10 +42,10 @@ export default function Itinerary() {
     <div className={styles.wrapper}>
       {events.map(event => (
         <Modal trigger={
-          <Button color={event.color} className={styles.event} icon='plus' onClick={openModal}>{event.name}</Button>
+          <Button color={event.color} className={styles.event} icon='plus' onClick={() => event.open = true}>{event.name}</Button>
         }
-        open={open}
-        onClose={closeModal}
+        open={event.open}
+        onClose={() => event.open = false}
         >
           <Modal.Header>Enter Event Information</Modal.Header>
           <Modal.Content>
@@ -83,22 +80,28 @@ export default function Itinerary() {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <Button onClick={() => {
-                    if (timeSpent !== null && timeSpent.match(/^-{0,1}\d+$/) && !events.some(e => e.name === name)) {
-                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, timeSpent} : e)); 
+                  <Button
+                    color="green"
+                    onClick={() => {
+                    if (timeSpent !== null && timeSpent.match(/^-{0,1}\d+$/) && !events.some(e => e.name === name && e.id !== event.id)) {
+                      console.log('test');
+                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, timeSpent, open: false} : e)); 
                       setName('');
                       setCategory('');
                       setTimeSpent(null);
-                      closeModal();
+                      event.open = false;
+                    } 
+                    if (event.timeSpent !== null) {
+                      event.open = false;
                     }
                   }}>Save</Button>
                   <Button
+                    color="red"
                     onClick={() => {
                         setEvents(events.filter(e => e.id !== event.id))
                         setName('');
                         setCategory('');
                         setTimeSpent(null);
-                        closeModal();
                       }
                     }
                   >Delete</Button>
@@ -118,8 +121,8 @@ export default function Itinerary() {
             color = newColors[index];
             newColors.splice(index, 1);
             
-            setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color}]); 
-            openModal();
+            setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color, open: true}]); 
+            // events[events.length - 1].open = true;
           }} circular icon='plus'/>
       </div>
       <Button inverted className={styles.event} as={Link} to="/map" onClick={() => {
@@ -134,6 +137,7 @@ export default function Itinerary() {
           events: eventsNoKeys,
         }
         console.log(itinerary);
+        props.timeTableFetch();
       }}>Submit</Button>
     </div>
   )

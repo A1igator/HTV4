@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +11,8 @@ import './App.css';
 import MapView from './map/MapView.js';
 
 function App() {
+  const [timetable, setTimeTable] = useState([]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -20,10 +22,10 @@ function App() {
               <MapView />
             </Route>
             <Route path="/itinerary">
-              <Itinerary />
+              <Itinerary timeTableFetch={table => {setTimeTable(table)}} />
             </Route>
             <Route path="/">
-              <Landing />
+              <Landing timetable={timetable}/>
             </Route>
           </Switch>
         </Router>
