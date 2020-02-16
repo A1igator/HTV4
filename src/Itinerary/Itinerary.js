@@ -11,7 +11,7 @@ const styles = {
     flex-direction: column;
   `,
   event: css`
-    width: 200px;
+    width: 60vw;
     margin-bottom: 20px !important;
   `,
 };
@@ -37,8 +37,8 @@ export default function Itinerary(props) {
   return (
     <div className={styles.wrapper}>
       {events.map(event => (
-        <Modal trigger={
-          <Button color={event.color} className={styles.event} icon='plus' onClick={() => event.open = true}>{event.name}</Button>
+        <Modal closeOnDimmerClick={false} trigger={
+          <Button size="massive" color={event.color} className={styles.event} icon='plus' onClick={() => event.open = true}>{event.name}</Button>
         }
         open={event.open}
         onClose={() => event.open = false}
@@ -109,7 +109,7 @@ export default function Itinerary(props) {
         ))
       }
       <div className={styles.event}>
-        <Button onClick={() => {
+        <Button size="massive" onClick={() => {
           if (newColors.length === 0) {
             newColors = [...colors];
           }
@@ -120,7 +120,7 @@ export default function Itinerary(props) {
           setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color, open: true}]);           
         }} circular icon='plus'/>
       </div>
-      <Button inverted className={styles.event} as={Link} to="/map" onClick={() => {
+      <Button size="massive" inverted className={styles.event} as={Link} to="/map" onClick={() => {
         const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent}));
         const itinerary = {
           user: {

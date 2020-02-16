@@ -1,6 +1,6 @@
 import React from 'react';
 import { css, cx } from 'emotion';
-import { Button } from 'semantic-ui-react';
+import { Button, Image, Header } from 'semantic-ui-react';
 import {
   Link
 } from "react-router-dom";
@@ -8,24 +8,23 @@ import backImg from './undraw_navigator_a479.svg';
 
 const styles = {
   landing: css`
-    background-image: url("${backImg}");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-color: #282C34;
-    width: 50vw;
-    height: 50vh;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
   `,
   button: css`
-    position: absolute;
-    top: 53.9%;
-    left: 47.5%;
+    margin-top: 50px !important;
   `,
 };
 
 export default function Landing() {
   return (
     <div className={styles.landing}>
-      <Button as={Link} to="/itinerary" className={styles.button}>Start</Button>
+      <Image src={backImg}></Image>
+      <Header inverted size="huge">Find The Best Path For Your Day</Header>
+      <div>
+        <Button color="violet" size="huge" as={Link} to="/itinerary" className={styles.button}>Start</Button>
+      </div>
     </ div>
   )
 }
