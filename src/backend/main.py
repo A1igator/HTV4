@@ -13,7 +13,10 @@ client = googlemaps.Client(key="AIzaSyDlJuLdAreKv4vCNH0vwGxarXY3e4F_e-I")
 #Expects string in the form "lat,long"  
 def getPlace(event, location, radius):
     cat = event["category"]
-    places = client.places(cat.replace('_',' '), type = cat, location=location, radius = radius)["results"]
+    search = event["keywords"]
+    if(search == ''):
+        search = cat.replace('_', '')
+    places = client.places(search, type = cat, location=location, radius = radius)["results"]
     places = sorted(places, key = itemgetter("rating"), reverse=True)
     if(len(places) >= 1):
         return places[0]
@@ -22,7 +25,7 @@ def getPlace(event, location, radius):
 
 #Takes formatted address and returns full detail of place. 
 def getPlaceFromAddress(address):
-    place = client.find_place(address, 'textquery', fields=["geometry", "name", "formatted_address"])
+    place = client.find_place(address, 'textquery', fields=["geometry", "name", "formatted_address", "place_id"])
     if(0 < len(place["candidates"]) <= 2):
         place = place["candidates"][0]
     else:
@@ -42,11 +45,16 @@ def generateWaypoints(data):
     location = str(data["user"]["location"]["lat"]) + \
         "," + str(data["user"]["location"]["lng"])
     for event in data["events"]:
-        address = getPlace(event, location, 10000)
-        if(address == None):
+        place = ''
+        print(event)
+        if(event["address"]):
+            place = getPlaceFromAddress(event["address"])
+        else:
+            place = getPlace(event, location, 10000)
+        if(place == None):
             continue
-        location = str(address["geometry"]["location"]["lat"]) + \
-            "," + str(address["geometry"]["location"]["lng"])
+        location = str(place["geometry"]["location"]["lat"]) + \
+            "," + str(place["geometry"]["location"]["lng"])
         print(event)
         duration = event["timeSpent"]
 
@@ -54,7 +62,7 @@ def generateWaypoints(data):
         category.append(event["category"])
         dur.append(duration)
         wp.append(location)
-        placeID.append(address["place_id"])
+        placeID.append(place["place_id"])
 
     return (wp, placeID, dur, name, category, location)
 
