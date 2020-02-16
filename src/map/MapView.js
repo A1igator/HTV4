@@ -12,7 +12,7 @@ const {
   Marker,
   InfoWindow,
 } = require("react-google-maps");
-let my_mode = window.google.maps.TravelMode.DRIVING;
+let my_mode = window.google.maps.TravelMode.;
   var test = [
      ['ChIJiRLw_wdIK4gRmgkLJuA61Xg','Loading...','Loading...'],
      ['ChIJiRLw_wdIK4gRmgkLJuA61Xg','Loading...','Loading...']
@@ -93,9 +93,9 @@ class MapView extends Component {
         //image: { src: '/transport_icons/a.jpg' },
       },
       {
-        key: 'BIKING',
-        text: 'Biking',
-        value: 'BIKING',
+        key: 'BICYCLING',
+        text: 'Cycling',
+        value: 'BICYCLING',
         //image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
       },
       {

@@ -199,7 +199,7 @@ class MapView extends Component {
         <b>Mode of Travel:</b>
         <Dropdown
           onChange={(_, {value})=>{}}
-          placeholder='Driving'
+          placeholder='Walking'
           fluid
           selection
           options={modes}
