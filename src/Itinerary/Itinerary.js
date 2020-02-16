@@ -142,7 +142,7 @@ export default function Itinerary(props) {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
-            props.timeTableFetch(data);
+            props.timeTableFetch(data, itinerary);
           })
           .catch(error => {
             console.error('Error:', error);
