@@ -10,7 +10,7 @@ const {
   Marker,
   InfoWindow,
 } = require("react-google-maps");
-
+let my_mode = window.google.maps.TravelMode.DRIVING;
 var test = [['ChIJiRLw_wdIK4gRmgkLJuA61Xg','40','Barber'],
  ['ChIJFRRC17Q2K4gRrDLxhzRnQJ4','35','Zoo'],
   ['ChIJ44AtJc00K4gRnPYkPlAQ648','70','Store'],
@@ -42,7 +42,7 @@ const MapWithADirectionsRenderer = compose(
         },
         waypoints: wypnts,
         optimizeWaypoints: true,
-        travelMode: window.google.maps.TravelMode.DRIVING
+        travelMode: my_mode
       }, (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           this.setState({
@@ -62,17 +62,18 @@ const MapWithADirectionsRenderer = compose(
     {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
 );
+
 const modes = [
   {
     key: 'DRIVING',
     text: 'Driving',
-    value: 'DRIVING',
+    value: window.google.maps.TravelMode.DRIVING,
     //image: { avatar: true, src: 'https://imgur.com/QknR12N' },
   },
   {
     key: 'WALKING',
     text: 'Walking',
-    value: 'WALKING',
+    value: window.google.maps.TravelMode.WALKING
     //image: { src: '/transport_icons/a.jpg' },
   },
   {
@@ -100,6 +101,7 @@ for (var i = 0; i < test.length; i++)
 }
 class MapView extends Component {
    render() {
+    console.log(this.props.timetable);
 
    return(
       <div>
@@ -182,6 +184,7 @@ class MapView extends Component {
         <div className="floating-panel" id="travel-mode">
         <b>Mode of Travel:</b>
         <Dropdown
+          onChange={(_, {value})=>{console.log(value);my_mode = value;}}
           placeholder='Driving'
           fluid
           selection

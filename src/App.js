@@ -19,13 +19,13 @@ function App() {
         <Router>
           <Switch>
             <Route path="/map">
-              <MapView />
+              <MapView timetable={timetable}/>
             </Route>
             <Route path="/itinerary">
-              <Itinerary timeTableFetch={table => {setTimeTable(table)}} />
+              <Itinerary timeTableFetch={table => {console.log(table); setTimeTable(table)}} />
             </Route>
             <Route path="/">
-              <Landing timetable={timetable}/>
+              <Landing />
             </Route>
           </Switch>
         </Router>

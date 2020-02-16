@@ -132,7 +132,7 @@ export default function Itinerary(props) {
           events: eventsNoKeys,
         }
         console.log(itinerary);
-        fetch('http://35.184.180.94:80/postTT', {
+        fetch('http://34.70.16.174:80/postTT', {
           method: 'POST', // or 'PUT'
           headers: {
             'Content-Type': 'application/json'
@@ -142,11 +142,11 @@ export default function Itinerary(props) {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
+            props.timeTableFetch(data);
           })
           .catch(error => {
             console.error('Error:', error);
           });
-        props.timeTableFetch();
       }}>Submit</Button>
     </div>
   )
