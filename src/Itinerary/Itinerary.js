@@ -25,6 +25,7 @@ export default function Itinerary(props) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [address, setAddress] = useState(null);
+  const [keyWords, setKeyWords] = useState(null);
   const [categories, setCategories] = useState([{text: ""}]);
   fetch(listOfCategories)
   .then(response => response.text())
@@ -74,16 +75,25 @@ export default function Itinerary(props) {
                     placeholder='Address' 
                   />
                 </Form.Field>
+                <Form.Field required>
+                  <Input 
+                    onChange={(_, {value}) => {setKeyWords(value)}} 
+                    fluid
+                    defaultValue={event.keyWords}
+                    placeholder='Key Words' 
+                  />
+                </Form.Field>
                 <Form.Field>
                   <Button
                     color="green"
                     onClick={() => {
                     if (!events.some(e => e.name === name && e.id !== event.id)) {
                       console.log('test');
-                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, address, open: false} : e)); 
+                      setEvents(events.map(e => e.id === event.id ? {...event, name, category, address, open: false, keyWords} : e)); 
                       setName('');
                       setCategory('');
                       setAddress(null);
+                      setKeyWords(null);
                       event.open = false;
                     } 
                     // if (event.timeSpent !== null) {
@@ -97,6 +107,7 @@ export default function Itinerary(props) {
                         setName('');
                         setCategory('');
                         setAddress(null);
+                        setKeyWords(null);
                       }
                     }
                   >Delete</Button>
@@ -120,7 +131,7 @@ export default function Itinerary(props) {
         }} circular icon='plus'/>
       </div>
       <Button disabled={events.length < 2 || events.length > 8} size="massive" inverted className={styles.event} as={Link} to="/map" onClick={() => {
-        const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent, address: e.address}));
+        const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent, address: e.address, keyWords: e.keyWords}));
         const itinerary = {
           user: {
             location: {
