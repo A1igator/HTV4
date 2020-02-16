@@ -139,10 +139,7 @@ export default function Itinerary(props) {
           },
           body: JSON.stringify(itinerary)
         })
-          .then(response => {
-            console.log(response);
-            response.json();
-          })
+          .then(response => response.json())
           .then(itinerary => {
             console.log('Success:', itinerary);
           })
