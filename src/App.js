@@ -26,6 +26,9 @@ function App() {
             <Route path="/mapWalking">
               <MapViewWalking itinerary={itinerary} timetable={timetable}/>
             </Route>
+            <Route path="/mapBicycling">
+              <MapViewWalking itinerary={itinerary} timetable={timetable}/>
+            </Route>
             <Route path="/itinerary">
               <Itinerary timeTableFetch={(table, itinerary) => {console.log(table); setTimeTable(table); setItinerary(itinerary)}} />
             </Route>

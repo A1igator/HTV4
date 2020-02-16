@@ -12,7 +12,7 @@ const {
   Marker,
   InfoWindow,
 } = require("react-google-maps");
-let my_mode = window.google.maps.TravelMode.DRIVING;
+let my_mode = window.google.maps.TravelMode.BICYCLING;
   var test = [
     //['EjAxMDk1IE1pbGl0YXJ5IFRyYWlsLCBTY2FyYm9yb3VnaCwgT04gTTFDLCBDYW5hZGEiMRIvChQKEgkZZMv3cdrUiRGHVO7W2wI10hDHCCoUChIJD0-c13Da1IkRGWlnDJ0lOVg','Loading...','Loading...'],
     //['EjAxMDk1IE1pbGl0YXJ5IFRyYWlsLCBTY2FyYm9yb3VnaCwgT04gTTFDLCBDYW5hZGEiMRIvChQKEgkZZMv3cdrUiRGHVO7W2wI10hDHCCoUChIJD0-c13Da1IkRGWlnDJ0lOVg','Loading...','Loading...']
@@ -207,7 +207,7 @@ class MapView extends Component {
         <b>Mode of Travel:</b>
         <Dropdown
           onChange={(_, {value})=>{this.props.history.push(value)}}
-          placeholder='Driving'
+          placeholder='Bicycling'
           fluid
           selection
           options={modes}
