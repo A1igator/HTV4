@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { Icon, Label, Menu, Table } from 'semantic-ui-react';
+import { Icon, Button, Label, Menu, Table } from 'semantic-ui-react';
 import './MapView.css';
 import useGeolocation from 'react-hook-geolocation';
 import {withRouter} from 'react-router-dom';
@@ -212,6 +212,12 @@ class MapView extends Component {
           selection
           options={modes}
         />
+        </div>
+        <div className="home-panel">
+          <Button icon
+            onClick={(_, {value})=>{this.props.history.push('./Landing')}}>
+            <Icon name='home' />
+          </Button>
         </div>
       </div>
    );

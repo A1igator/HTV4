@@ -4,6 +4,8 @@ import { Icon, Label, Menu, Table } from 'semantic-ui-react';
 import './MapView.css';
 import useGeolocation from 'react-hook-geolocation';
 import {withRouter} from 'react-router-dom';
+import { Button } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const {
   withGoogleMap,
@@ -212,6 +214,12 @@ class MapView extends Component {
           selection
           options={modes}
         />
+        </div>
+        <div className="home-panel">
+          <Button icon
+            onClick={(_, {value})=>{this.props.history.push('./Landing')}}>
+            <Icon name='home' />
+          </Button>
         </div>
       </div>
    );
