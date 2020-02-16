@@ -120,7 +120,7 @@ export default function Itinerary(props) {
         }} circular icon='plus'/>
       </div>
       <Button disabled={events.length < 2 || events.length > 8} size="massive" inverted className={styles.event} as={Link} to="/map" onClick={() => {
-        const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent}));
+        const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent, address: e.address}));
         const itinerary = {
           user: {
             location: {
