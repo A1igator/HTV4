@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/map/MapView copy 2.js
+src/map/MapDirections.js
+src/map/MapRender.js
+src/map/transport_icons/16301.png
+src/map/transport_icons/a.jpg
+src/map/transport_icons/car.png
+src/map/transport_icons/car1.jpg
+public/message.txt
+public/index_new.html

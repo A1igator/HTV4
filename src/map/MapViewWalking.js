@@ -3,7 +3,6 @@ import { Dropdown } from 'semantic-ui-react';
 import { Icon, Label, Menu, Table } from 'semantic-ui-react';
 import './MapView.css';
 import useGeolocation from 'react-hook-geolocation';
-import {withRouter} from 'react-router-dom';
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const {
   withGoogleMap,
@@ -12,7 +11,7 @@ const {
   Marker,
   InfoWindow,
 } = require("react-google-maps");
-let my_mode = window.google.maps.TravelMode.DRIVING;
+let my_mode = window.google.maps.TravelMode.WALKING;
   var test = [
      ['ChIJiRLw_wdIK4gRmgkLJuA61Xg','Loading...','Loading...'],
      ['ChIJiRLw_wdIK4gRmgkLJuA61Xg','Loading...','Loading...']
@@ -22,15 +21,17 @@ let my_mode = window.google.maps.TravelMode.DRIVING;
   //     ['ChIJo6RbIvLZ1IkRfVHfYVKwK1M','5','Aquarium']
     ]; 
 
+let testing = false;
 
 class MapView extends Component {
    render() {
+    testing = !testing;
     console.log("HEY",my_mode,this.props.timetable);
     if(this.props.timetable.response){
       test = this.props.timetable.response;
       console.log("test",test);
     }
-    const MapWithADirectionsRenderer = compose(
+    let MapWithADirectionsRenderer = compose(
       withGoogleMap,
       lifecycle({
         componentDidMount() {
@@ -118,10 +119,10 @@ class MapView extends Component {
 
    return(
       <div>
-        <MapWithADirectionsRenderer
+        {testing && <MapWithADirectionsRenderer
           containerElement={ <div style={{ height: `100vh`, width: '100vw' }} /> }
           mapElement={ <div style={{ height: `100%` }} /> }
-        />
+        />}
         <div className="info-table">
         <Table celled>
     <Table.Header>
@@ -197,7 +198,7 @@ class MapView extends Component {
         <div className="floating-panel" id="travel-mode">
         <b>Mode of Travel:</b>
         <Dropdown
-          onChange={(_, {value})=>{this.props.history.push('/mapWalking')}}
+          onChange={(_, {value})=>{}}
           placeholder='Driving'
           fluid
           selection
@@ -208,4 +209,4 @@ class MapView extends Component {
    );
    }
 };
-export default withRouter(MapView);
+export default MapView;

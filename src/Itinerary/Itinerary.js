@@ -139,17 +139,14 @@ export default function Itinerary(props) {
           },
           body: JSON.stringify(itinerary)
         })
-          .then(response => {
-            console.log(response);
-            response.json();
-          })
-          .then(itinerary => {
-            console.log('Success:', itinerary);
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            props.timeTableFetch(data);
           })
           .catch(error => {
             console.error('Error:', error);
           });
-        // props.timeTableFetch();
       }}>Submit</Button>
     </div>
   )

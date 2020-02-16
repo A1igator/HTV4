@@ -9,6 +9,7 @@ import Itinerary from './Itinerary/Itinerary';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import MapView from './map/MapView.js';
+import MapViewWalking from './map/MapViewWalking';
 
 function App() {
   const [timetable, setTimeTable] = useState([]);
@@ -19,13 +20,16 @@ function App() {
         <Router>
           <Switch>
             <Route path="/map">
-              <MapView />
+              <MapView timetable={timetable}/>
+            </Route>
+            <Route path="/mapWalking">
+              <MapViewWalking timetable={timetable}/>
             </Route>
             <Route path="/itinerary">
-              <Itinerary timeTableFetch={table => {setTimeTable(table)}} />
+              <Itinerary timeTableFetch={table => {console.log(table); setTimeTable(table)}} />
             </Route>
             <Route path="/">
-              <Landing timetable={timetable}/>
+              <Landing />
             </Route>
           </Switch>
         </Router>
