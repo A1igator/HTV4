@@ -42,11 +42,15 @@ def generateWaypoints(data):
     location = str(data["user"]["location"]["lat"]) + \
         "," + str(data["user"]["location"]["lng"])
     for event in data["events"]:
-        address = getPlace(event, location, 10000)
-        if(address == None):
+        place = ''
+        if("address" in event):
+            place = getPlaceFromAddress(address)
+        else:
+            place = getPlace(event, location, 10000)
+        if(place == None):
             continue
-        location = str(address["geometry"]["location"]["lat"]) + \
-            "," + str(address["geometry"]["location"]["lng"])
+        location = str(place["geometry"]["location"]["lat"]) + \
+            "," + str(place["geometry"]["location"]["lng"])
         print(event)
         duration = event["timeSpent"]
 
@@ -54,7 +58,7 @@ def generateWaypoints(data):
         category.append(event["category"])
         dur.append(duration)
         wp.append(location)
-        placeID.append(address["place_id"])
+        placeID.append(place["place_id"])
 
     return (wp, placeID, dur, name, category, location)
 
