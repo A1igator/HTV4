@@ -28,7 +28,7 @@ export default function Itinerary(props) {
   const [categories, setCategories] = useState([{text: ""}]);
   fetch(listOfCategories)
   .then(response => response.text())
-  .then(text => setCategories(text.split("\n").map(name => {return {value: name, key: name, text: name.replace(/_/g, " ").split(' ')
+  .then(text => setCategories(text.split("\n").map(name => {return {value: name.replace('\r', ''), key: name.replace('\r', ''), text: name.replace('\r', '').replace(/_/g, " ").split(' ')
   .map(word => word.charAt(0).toUpperCase() + word.slice(1))
   .join(' ')}})));
 
@@ -110,16 +110,15 @@ export default function Itinerary(props) {
       }
       <div className={styles.event}>
         <Button onClick={() => {
-            if (newColors.length === 0) {
-              newColors = [...colors];
-            }
-            const index = Math.floor(Math.random() * newColors.length);
-            color = newColors[index];
-            newColors.splice(index, 1);
-            
-            setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color, open: true}]); 
-            // events[events.length - 1].open = true;
-          }} circular icon='plus'/>
+          if (newColors.length === 0) {
+            newColors = [...colors];
+          }
+          const index = Math.floor(Math.random() * newColors.length);
+          color = newColors[index];
+          newColors.splice(index, 1);
+          
+          setEvents([...events, {id: events.length !== 0 ? events[events.length - 1].id + 1 : 0, name: "", category: '', timeSpent: null, color, open: true}]);           
+        }} circular icon='plus'/>
       </div>
       <Button inverted className={styles.event} as={Link} to="/map" onClick={() => {
         const eventsNoKeys = events.map(e => ({name: e.name, category: e.category, timeSpent: e.timeSpent}));
